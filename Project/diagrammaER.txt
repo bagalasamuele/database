@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-06-22T15:00:52.949Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15" etag="kfpMYlfMRCnUK_unGGTL" version="24.6.1" type="github">
+<mxfile host="app.diagrams.net" modified="2024-06-22T15:01:48.614Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15" etag="G7mIDyF6epNMHdJMNHJN" version="24.6.1" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="1830" dy="1299" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2019" dy="1438" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -558,7 +558,7 @@
             <mxPoint x="451" y="670" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ur0vsNlN08UrmBxF-eSU-1" value="Costo spedizione" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="ur0vsNlN08UrmBxF-eSU-1" value="costo_spedizione" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="430" y="680" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ur0vsNlN08UrmBxF-eSU-2" value="" style="endArrow=oval;html=1;rounded=0;startArrow=none;startFill=0;endFill=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.484;entryY=0.941;entryDx=0;entryDy=0;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-3" edge="1" target="ur0vsNlN08UrmBxF-eSU-4">
@@ -659,7 +659,7 @@
             <mxPoint x="540" y="510" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ur0vsNlN08UrmBxF-eSU-37" value="&lt;font size=&quot;1&quot;&gt;Premium partnter&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="ur0vsNlN08UrmBxF-eSU-37" value="&lt;font size=&quot;1&quot;&gt;Premium_partner&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="535" y="520" width="30" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ur0vsNlN08UrmBxF-eSU-42" value="" style="endArrow=oval;html=1;rounded=0;exitX=0.25;exitY=0;exitDx=0;exitDy=0;startArrow=none;startFill=0;endFill=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="mmn9zP1ueqNvgKnZoPSK-59" edge="1">
