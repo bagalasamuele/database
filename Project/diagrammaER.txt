@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-06-23T16:01:30.408Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="MMYWBw5Krrbu8_sUB9a_" version="24.5.2" type="github">
+<mxfile host="app.diagrams.net" modified="2024-06-23T16:21:50.353Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="s-w6QZi0Tt417hizJdHh" version="24.5.2" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="3088" dy="1941" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -79,7 +79,7 @@
             <mxPoint x="-42" y="195" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="mmn9zP1ueqNvgKnZoPSK-25" value="id_ordine (fk)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="mmn9zP1ueqNvgKnZoPSK-25" value="numero_order&lt;div&gt;&amp;nbsp;(fk)&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="-222" y="325" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="mmn9zP1ueqNvgKnZoPSK-26" value="id dettaglio (pk)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
