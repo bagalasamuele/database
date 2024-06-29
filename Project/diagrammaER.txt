@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-06-29T17:06:05.341Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15" etag="JNlEit0Uu3pyOTLrDy3P" version="24.6.4" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2024-06-29T17:12:34.718Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15" etag="vybAUrKXfNGIx7phxvtK" version="24.6.4" type="github" pages="2">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -1340,7 +1340,7 @@
             <mxPoint x="280" y="660" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ajj7D5FtrJq_JrArRjRu-1" value="Codice Sconto" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="ajj7D5FtrJq_JrArRjRu-1" value="Codice_Sconto" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="670" y="535" width="100" height="28.5" as="geometry" />
         </mxCell>
         <mxCell id="ajj7D5FtrJq_JrArRjRu-2" value="" style="html=1;rounded=0;startArrow=oval;startFill=1;endArrow=none;endFill=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" edge="1">
@@ -1427,7 +1427,7 @@
         <mxCell id="0uVptyvZYJP2ct3lrw_0-1" value="ha" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="600" y="650" width="60" height="39.97" as="geometry" />
         </mxCell>
-        <mxCell id="0uVptyvZYJP2ct3lrw_0-2" value="metodo di pagamento" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="0uVptyvZYJP2ct3lrw_0-2" value="metodo_&lt;div&gt;di_pagamento&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="688.5" y="656.5" width="83" height="30.12" as="geometry" />
         </mxCell>
         <mxCell id="0uVptyvZYJP2ct3lrw_0-3" value="" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="0uVptyvZYJP2ct3lrw_0-1" edge="1">
