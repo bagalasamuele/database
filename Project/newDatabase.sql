@@ -7,7 +7,9 @@ CREATE TABLE utenti (
     numero_telefono VARCHAR(30),
     indirizzo TEXT,
     premium BOOLEAN DEFAULT FALSE,
+    borsellino_ID INT,
     PRIMARY KEY (user_id)
+    FOREIGN KEY (user_id) REFERENCES borsellini(user_id)
 );
 
 
@@ -231,13 +233,12 @@ CREATE TABLE recensioni_rider (
 
 /*************** POPOLAMENTO ***************/
 
-
-INSERT INTO utenti (nome, cognome, password, email, numero_telefono, indirizzo, premium) VALUES
-('Alice', 'Rossi', 'password123', 'alice.rossi@example.com', '1234567890', 'Via Roma 10, Milano', TRUE),
-('Bob', 'Bianchi', 'password456', 'bob.bianchi@example.com', '0987654321', 'Piazza Duomo 5, Milano', FALSE),
-('Charlie', 'Verdi', 'password789', 'charlie.verdi@example.com', '1122334455', 'Corso Italia 20, Milano', TRUE),
-('Diana', 'Neri', 'password321', 'diana.neri@example.com', '5566778899', 'Via Garibaldi 7, Milano', FALSE),
-('Eva', 'Gialli', 'password654', 'eva.gialli@example.com', '9988776655', 'Viale Monza 15, Milano', TRUE);
+INSERT INTO utenti (nome, cognome, password, email, numero_telefono, indirizzo, premium, borsellino_ID) VALUES
+('Alice', 'Rossi', 'password123', 'alice.rossi@example.com', '1234567890', 'Via Roma 10, Milano', TRUE, 1),
+('Bob', 'Bianchi', 'password456', 'bob.bianchi@example.com', '0987654321', 'Piazza Duomo 5, Milano', FALSE, 2),
+('Charlie', 'Verdi', 'password789', 'charlie.verdi@example.com', '1122334455', 'Corso Italia 20, Milano', TRUE, 3),
+('Diana', 'Neri', 'password321', 'diana.neri@example.com', '5566778899', 'Via Garibaldi 7, Milano', FALSE, 4),
+('Eva', 'Gialli', 'password654', 'eva.gialli@example.com', '9988776655', 'Viale Monza 15, Milano', TRUE, 5);
 
 INSERT INTO ristoranti (nome_ristorante, posizione, costo_spedizione, categoria, descrizione, immagine_profilo, premium_partner, numero_stelle) VALUES
 ('Ristorante Bella Italia', 'Via Milano 10, Milano', 2.50, 'Italiana', 'Ristorante tipico italiano con piatti tradizionali', 'immagini/bella_italia.jpg', TRUE, 4.5),
@@ -245,3 +246,9 @@ INSERT INTO ristoranti (nome_ristorante, posizione, costo_spedizione, categoria,
 ('Sushi House', 'Corso Italia 20, Milano', 5.00, 'Giapponese', 'Ristorante giapponese con una selezione di sushi fresco', 'immagini/sushi_house.jpg', TRUE, 4.8),
 ('Trattoria Toscana', 'Via Garibaldi 7, Milano', 4.00, 'Toscana', 'Trattoria toscana con piatti tipici e ambiente accogliente', 'immagini/toscana.jpg', FALSE, 4.2),
 ('Ristorante Fusion', 'Viale Monza 15, Milano', 6.00, 'Fusion', 'Cucina fusion con piatti innovativi e creativi', 'immagini/fusion.jpg', TRUE, 4.7);
+
+
+
+
+INSERT INTO borsellini (saldo, user_ID)
+SELECT 0.0 AS saldo, user_id FROM utenti;
