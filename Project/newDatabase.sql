@@ -136,3 +136,70 @@ CREATE TABLE allergeni(
 	nome VARCHAR(50) NOT NULL,
     PRIMARY KEY (nome)
 );
+
+
+
+--Modificazione per aggiungere refernza
+	ALTER TABLE dettagli_ordini
+    ADD CONSTRAINT fk_piatto
+    FOREIGN KEY (piatto_id) REFERENCES piatti(piatto_id);
+
+
+-- Creazione della tabella Reclamo
+CREATE TABLE Reclamo (
+    reclamo_id SERIAL,
+    descrizione TEXT,
+  	numero_ordine BIGINT UNSIGNED NOT NULL,
+	PRIMARY KEY(reclamo_id),
+  	FOREIGN KEY(numero_ordine) REFERENCES ordini(numero_ordine)
+);
+
+
+-- Creazione della tabella Borsellino
+CREATE TABLE borsellini (
+    borsellino_ID INT AUTO_INCREMENT,
+    saldo NUMERIC(10, 2),
+    user_ID INT,
+    PRIMARY KEY(borsellino_ID),
+    FOREIGN KEY(user_ID) REFERENCES utenti(user_id)
+);
+
+-- Creazione della tabella Metodo_di_pagamento
+CREATE TABLE metodi_di_pagamenti (
+    metodo_ID INT AUTO_INCREMENT,
+    tipo VARCHAR(50),
+    user_ID INT,
+    PRIMARY KEY(metodo_ID),
+    FOREIGN KEY(user_ID) REFERENCES utenti(user_id)
+);
+
+-- Creazione della tabella Codice_sconto
+CREATE TABLE codici_sconto (
+    coupon_id INT AUTO_INCREMENT,
+    scadenza DATE,
+    valore NUMERIC(10, 2),
+    PRIMARY KEY(coupon_id)
+);
+
+
+-- Creazione del tipo ENUM simulato con un campo VARCHAR
+CREATE TABLE tipo_utente (
+    tipo VARCHAR(20) PRIMARY KEY
+);
+
+-- Inserimento dei valori ENUM
+INSERT INTO tipo_utente (tipo) VALUES ('Utente'), ('Ristoratore'), ('Rider');
+
+-- Creazione della tabella Messaggio
+CREATE TABLE messaggi (
+    messaggio_id INT AUTO_INCREMENT,
+    mittente_id INT NOT NULL,
+    destinatario_id INT NOT NULL,
+    timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    tipo_mittente VARCHAR(20) NOT NULL,
+    tipo_destinatario VARCHAR(20) NOT NULL,
+    contenuto TEXT,
+    PRIMARY KEY(messaggio_id),
+    FOREIGN KEY(tipo_mittente) REFERENCES tipo_utente(tipo),
+    FOREIGN KEY(tipo_destinatario) REFERENCES tipo_utente(tipo)
+);
