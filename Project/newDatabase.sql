@@ -203,3 +203,18 @@ CREATE TABLE messaggi (
     FOREIGN KEY(tipo_mittente) REFERENCES tipo_utente(tipo),
     FOREIGN KEY(tipo_destinatario) REFERENCES tipo_utente(tipo)
 );
+
+-- Creazione tabella recensioni dei rider
+CREATE TABLE recensioni_rider (
+  recensione_id INT,
+  user_id INT,
+	stelle INT CHECK (stelle >= 1 AND stelle <= 5),
+  FOREIGN KEY (user_id) REFERENCES utenti(user_id),
+  PRIMARY KEY (recensione_id)
+);
+
+
+
+
+
+
