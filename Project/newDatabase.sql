@@ -21,7 +21,7 @@ CREATE TABLE ristoranti (
     descrizione TEXT,
     immagine_profilo TEXT,
     premium_partner BOOLEAN DEFAULT FALSE,
-    numero_stelle NUMERIC(1, 1),
+    numero_stelle NUMERIC(2, 1)
   	PRIMARY KEY (restaurant_id)
 );
 
@@ -146,7 +146,7 @@ CREATE TABLE allergeni(
 
 
 -- Creazione della tabella Reclamo
-CREATE TABLE Reclamo (
+CREATE TABLE reclami (
     reclamo_id SERIAL,
     descrizione TEXT,
   	numero_ordine BIGINT UNSIGNED NOT NULL,
@@ -203,3 +203,28 @@ CREATE TABLE messaggi (
     FOREIGN KEY(tipo_mittente) REFERENCES tipo_utente(tipo),
     FOREIGN KEY(tipo_destinatario) REFERENCES tipo_utente(tipo)
 );
+
+
+
+
+
+
+
+
+
+/*************** POPOLAMENTO ***************/
+
+
+INSERT INTO utenti (nome, cognome, password, email, numero_telefono, indirizzo, premium) VALUES
+('Alice', 'Rossi', 'password123', 'alice.rossi@example.com', '1234567890', 'Via Roma 10, Milano', TRUE),
+('Bob', 'Bianchi', 'password456', 'bob.bianchi@example.com', '0987654321', 'Piazza Duomo 5, Milano', FALSE),
+('Charlie', 'Verdi', 'password789', 'charlie.verdi@example.com', '1122334455', 'Corso Italia 20, Milano', TRUE),
+('Diana', 'Neri', 'password321', 'diana.neri@example.com', '5566778899', 'Via Garibaldi 7, Milano', FALSE),
+('Eva', 'Gialli', 'password654', 'eva.gialli@example.com', '9988776655', 'Viale Monza 15, Milano', TRUE);
+
+INSERT INTO ristoranti (nome_ristorante, posizione, costo_spedizione, categoria, descrizione, immagine_profilo, premium_partner, numero_stelle) VALUES
+('Ristorante Bella Italia', 'Via Milano 10, Milano', 2.50, 'Italiana', 'Ristorante tipico italiano con piatti tradizionali', 'immagini/bella_italia.jpg', TRUE, 4.5),
+('Pizzeria Napoli', 'Piazza Garibaldi 5, Milano', 3.00, 'Pizza', 'Famosa pizzeria napoletana con una vasta scelta di pizze', 'immagini/napoli.jpg', FALSE, 4.0),
+('Sushi House', 'Corso Italia 20, Milano', 5.00, 'Giapponese', 'Ristorante giapponese con una selezione di sushi fresco', 'immagini/sushi_house.jpg', TRUE, 4.8),
+('Trattoria Toscana', 'Via Garibaldi 7, Milano', 4.00, 'Toscana', 'Trattoria toscana con piatti tipici e ambiente accogliente', 'immagini/toscana.jpg', FALSE, 4.2),
+('Ristorante Fusion', 'Viale Monza 15, Milano', 6.00, 'Fusion', 'Cucina fusion con piatti innovativi e creativi', 'immagini/fusion.jpg', TRUE, 4.7);
