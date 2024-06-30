@@ -49,7 +49,8 @@ CREATE TABLE mezzi (
 -- Creazione della tabella Rider senza chiave esterna a Mezzo
 CREATE TABLE riders (
     rider_ID INT PRIMARY KEY,
-    mezzo_ID SERIAL,  
+    mezzo_ID SERIAL,
+    nome VARCHAR(50),
     posizione TEXT
 );
 
