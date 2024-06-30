@@ -42,7 +42,7 @@ CREATE TABLE recensioni_ristoranti (
 CREATE TABLE mezzi (
     mezzo_ID SERIAL PRIMARY KEY,
     autonomia_residua NUMERIC(10, 2),
-    rider_ID INTEGER,  -
+    rider_ID INTEGER,
     autonomia_totale NUMERIC(10, 2)
 );
 
