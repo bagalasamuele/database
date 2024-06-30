@@ -37,14 +37,7 @@ CREATE TABLE recensioni_ristoranti (
     PRIMARY KEY (review_id)
 );
 
-/* Tabelle per creazione */
 
-CREATE TABLE mezzi (
-    mezzo_ID SERIAL PRIMARY KEY,
-    autonomia_residua NUMERIC(10, 2),
-    rider_ID INTEGER,
-    autonomia_totale NUMERIC(10, 2)
-);
 
 -- Creazione della tabella Rider senza chiave esterna a Mezzo
 CREATE TABLE riders (
@@ -54,6 +47,20 @@ CREATE TABLE riders (
     posizione TEXT
 );
 
+CREATE TABLE mezzi (
+    mezzo_ID SERIAL PRIMARY KEY,
+    autonomia_residua NUMERIC(10, 2),
+    rider_ID INTEGER,
+    tipo_veicolo ,
+    autonomia_totale NUMERIC(10, 2),
+	FOREIGN KEY (tipo_veicolo) REFERENCES tipo_veicolo.tipo;
+);
+
+CREATE TABLE tipo_veicolo (
+    tipo VARCHAR(20)
+);
+
+INSERT INTO tipo_veicolo (tipo) VALUES ('Monopattino'), ('Bici'), ('Bici Elettrica');
 -- Aggiornamento della tabella Mezzo con il vincolo di chiave esterna a Rider
 ALTER TABLE mezzi
 ADD CONSTRAINT fk_rider
