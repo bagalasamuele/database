@@ -51,9 +51,9 @@ CREATE TABLE mezzi (
     mezzo_ID SERIAL PRIMARY KEY,
     autonomia_residua NUMERIC(10, 2),
     rider_ID INTEGER,
-    tipo_veicolo ,
+    veicolo ,
     autonomia_totale NUMERIC(10, 2),
-	FOREIGN KEY (tipo_veicolo) REFERENCES tipo_veicolo.tipo;
+	FOREIGN KEY (veicolo) REFERENCES tipo_veicolo.tipo;
 );
 
 CREATE TABLE tipo_veicolo (
