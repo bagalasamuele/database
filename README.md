@@ -12,3 +12,16 @@
 La relazione per il progetto è in fase di scrittura ed è disponibile al seguente link:
 
 [Documento Google Docs - Relazione del Progetto](https://docs.google.com/document/d/1DzxUjuaCh5eImsaroqHq8j8oPXeEQ7thTz5TV4AdffI/)
+
+## Production Database:
+https://out106.keliweb.com/phpmyadmin/
+
+## Software richiesti:
+
+**Locale:**
+XAMPP, Beekeeper, MariaDB
+
+**Prod:**
+Connettersi al phpMyAdmin
+
+
