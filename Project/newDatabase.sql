@@ -127,3 +127,12 @@ CREATE TABLE piatti (
   	FOREIGN KEY(dettaglio_id) REFERENCES dettagli_ordini(dettaglio_id)
 );
 
+CREATE TABLE ingredienti(
+	nome VARCHAR(50) NOT NULL,
+    PRIMARY KEY (nome)
+);
+
+CREATE TABLE allergeni(
+	nome VARCHAR(50) NOT NULL,
+    PRIMARY KEY (nome)
+);
