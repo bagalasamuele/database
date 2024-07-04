@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-07-04T09:20:51.986Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15" etag="9pyhw1e-PF9Tl4eRFW4g" version="24.6.4" type="github" pages="3">
+<mxfile host="app.diagrams.net" modified="2024-07-04T09:56:30.741Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15" etag="2ubuGC6jC7fkMTPLJyyb" version="24.6.4" type="github" pages="3">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="2420" dy="1709" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -1661,24 +1661,6 @@
         </mxCell>
         <mxCell id="rOO05-8kUvWT9dbQ1aCQ-4" value="Piatto" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="225" y="1225" width="90" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="rOO05-8kUvWT9dbQ1aCQ-5" value="" style="endArrow=none;html=1;rounded=0;exitX=0.755;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" parent="1" source="rOO05-8kUvWT9dbQ1aCQ-6" target="rOO05-8kUvWT9dbQ1aCQ-4" edge="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="200" y="1220" as="sourcePoint" />
-            <mxPoint x="225" y="1240" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="rOO05-8kUvWT9dbQ1aCQ-6" value="dettaglio_ID (FK)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="106.13" y="1195" width="110" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="rOO05-8kUvWT9dbQ1aCQ-7" value="" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="rOO05-8kUvWT9dbQ1aCQ-8" target="rOO05-8kUvWT9dbQ1aCQ-4" edge="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="180" y="1215" as="sourcePoint" />
-            <mxPoint x="520" y="1070" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="rOO05-8kUvWT9dbQ1aCQ-8" value="restaurant_ID(FK)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="315" y="1190" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="rOO05-8kUvWT9dbQ1aCQ-9" value="piatto_ID(PK)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="80" y="1250" width="95" height="30" as="geometry" />
