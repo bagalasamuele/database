@@ -6,6 +6,7 @@ CREATE TABLE utenti (
     numero_telefono VARCHAR(30),
     indirizzo TEXT,
     premium BOOLEAN DEFAULT FALSE,
+    borsellino_ID INT NOT NULL,
     PRIMARY KEY (email)
 );
 
@@ -18,6 +19,11 @@ CREATE TABLE borsellini (
     PRIMARY KEY (email, borsellino_ID),
     FOREIGN KEY (email) REFERENCES utenti(email)
 );
+
+ALTER TABLE utenti
+ADD CONSTRAINT fk_utenti_borsellini
+FOREIGN KEY (email, borsellino_ID) REFERENCES borsellini(email, borsellino_ID);
+
 
 CREATE TABLE metodi_di_pagamenti (
     metodo_ID SERIAL PRIMARY KEY,
