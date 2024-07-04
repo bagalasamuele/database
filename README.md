@@ -11,9 +11,7 @@
 
 ## il progetto va consegnato entro il 4 luglio alle 23:59
 
-[Link Moodle Unito - Consegna Progetto](https://informatica.i-learn.unito.it/mod/assign/view.php?id=235786).
-
-Link: 
+[Link Moodle Unito - Consegna Progetto](https://informatica.i-learn.unito.it/mod/assign/view.php?id=235786)
 
 ## Link alla relazione
 
