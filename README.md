@@ -7,6 +7,14 @@
   - Lo scritto si terrà l'8 luglio
   - La discussione del progetto si terrà in data da definire, concordata con il professore
 
+# Progetto
+
+## il progetto va consegnato entro il 4 luglio alle 23:59
+
+[Link Moodle Unito - Consegna Progetto](https://informatica.i-learn.unito.it/mod/assign/view.php?id=235786).
+
+Link: 
+
 ## Link alla relazione
 
 La relazione per il progetto è in fase di scrittura ed è disponibile al seguente link:
