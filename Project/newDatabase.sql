@@ -1,9 +1,8 @@
 CREATE TABLE utenti (
-    user_id INT AUTO_INCREMENT,
+    email VARCHAR(50) NOT NULL,
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,
     password VARCHAR(30) NOT NULL,
-    email VARCHAR(50) UNIQUE NOT NULL,
     numero_telefono VARCHAR(30),
     indirizzo TEXT,
     premium BOOLEAN DEFAULT FALSE,
@@ -218,7 +217,7 @@ CREATE TABLE messaggi (
 CREATE TABLE recensioni_rider (
   recensione_id INT,
   user_id INT,
-	stelle INT CHECK (stelle >= 1 AND stelle <= 5),
+stelle INT CHECK (stelle >= 1 AND stelle <= 5),
   FOREIGN KEY (user_id) REFERENCES utenti(user_id),
   PRIMARY KEY (recensione_id)
 );
