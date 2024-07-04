@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-07-04T11:57:41.914Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="FHfoWV7Jl4PlIxZJgbAy" version="24.6.4" type="github" pages="3">
+<mxfile host="app.diagrams.net" modified="2024-07-04T12:04:38.961Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="BqAfqloXrxn8vMqD5gh0" version="24.6.4" type="github" pages="3">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="2420" dy="1709" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -2710,15 +2710,6 @@
         </mxCell>
         <mxCell id="kERyiwpb5J98p0luU6QP-208" value="Titolo" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="kERyiwpb5J98p0luU6QP-1" vertex="1">
           <mxGeometry x="38.82000000000005" y="474.99999999999994" width="40" height="21.08" as="geometry" />
-        </mxCell>
-        <mxCell id="kERyiwpb5J98p0luU6QP-209" value="Stelle" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="kERyiwpb5J98p0luU6QP-1" vertex="1">
-          <mxGeometry x="113.75" y="614.19" width="27.5" height="21.08" as="geometry" />
-        </mxCell>
-        <mxCell id="kERyiwpb5J98p0luU6QP-210" value="" style="endArrow=oval;html=1;rounded=0;exitX=0.826;exitY=0.988;exitDx=0;exitDy=0;startArrow=none;startFill=0;endFill=0;entryX=0;entryY=0;entryDx=0;entryDy=0;exitPerimeter=0;" parent="kERyiwpb5J98p0luU6QP-1" source="kERyiwpb5J98p0luU6QP-86" target="kERyiwpb5J98p0luU6QP-209" edge="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="113.75" y="585" as="sourcePoint" />
-            <mxPoint x="78.75" y="694.19" as="targetPoint" />
-          </mxGeometry>
         </mxCell>
         <mxCell id="kERyiwpb5J98p0luU6QP-220" value="(1,1)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="kERyiwpb5J98p0luU6QP-1" vertex="1">
           <mxGeometry x="425" y="352.5" width="60" height="30" as="geometry" />
