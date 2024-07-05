@@ -1,0 +1,1330 @@
+%\documentclass{article}
+
+
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+\graphicspath{{Images/}}
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage[inkscapeformat=png]{svg}
+\addtolength{\textwidth}{1.5in}
+\addtolength{\textheight}{1in}
+\addtolength{\evensidemargin}{0.3in}
+\addtolength{\oddsidemargin}{-1.0in}
+\addtolength{\topmargin}{-0.5in}
+
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[italian]{babel}
+\usepackage{ulem}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=1.5cm,bottom=1.5cm,left=1.4cm,right=1.0cm,marginparwidth=1.15cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{blindtext}
+%\parindent=0pt % disables indentation
+
+
+
+
+
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour},   commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+
+
+
+
+\title{PROGETTO BASI DI DATI 2022 - 2023}
+\author{Filippo Gualtierotti (mat. 1011456)}
+
+\begin{document}
+\maketitle 
+
+\begin{abstract}
+Progetto di piattaforma di live streaming
+\end{abstract}
+
+  \tableofcontents   
+\clearpage
+
+
+\section{Progettazione concettuale}
+\begin{quote}
+    
+
+    \subsection{Requisiti iniziali}
+    \begin{quote}
+       Si vuole realizzare una base di dati per un servizio che permette di fare live streaming su vari argomenti. Il live streaming (o, più sinteticamente, la live) permette di interagire con il pubblico in tempo reale grazie a feed video, chat e altro.
+    Ogni utente può essere spettatore e/o streamer. Gli spettatori possono essere registrati al servizio oppure possono guardare le live in modo anonimo. Per registrarsi, gli utenti devono indicare nome utente, password, data di nascita, numero di telefono o indirizzo mail. Gli utenti iscritti possono: chattare, seguire lo streamer, creare dirette.
+    Gli streamer hanno ciascuno un canale, che può essere caratterizzato tramite una descrizione. Per ogni canale, è possibile specificare una lista di social associati (ad esempio Instagram, YouTube, ecc.), un’immagine profilo e anche un trailer (Figura 1(a)).
+    In ogni canale possono esserci live, video (live passate) e clip (video di durata breve). 
+    Le live possono anche non diventare video del canale.
+    Ognuno ha un titolo, una durata, appartiene a una categoria (Figura 1(b)) e può essere associato a diversi tag. Per ogni live viene memorizzato il numero medio di spettatori mentre per i video e le clip il numero di visualizzazioni. 
+
+     {\centering\includegraphics[scale=0.8]{screenfotorequisitiiniziali.png}\\ \par
+        }
+    Per ogni creatore di contenuti, si memorizzano il numero di live effettuate, il numero di minuti trasmessi, il numero medio di spettatori simultanei. Inoltre, sulla pagina del canale viene visualizzato il numero di follower.
+    Quando uno streamer rispetta determinati parametri di performance (ha un minimo di 500 minuti trasmessi, una media di tre o più spettatori simultanei, almeno 50 follower), può diventare affiliate.
+    Le stream hanno degli orari. Ogni streamer ha un calendario in cui può dire quando farà stream e indicare il titolo delle prossime live.
+    I viewer possono diventare follower del canale degli streamer che preferiscono, e le loro preferenze sono raccolte in un elenco di follower a cui possono accedere dal loro profilo. I viewer Gli utenti possono inoltre supportare gli streamer tramite la subscription (a pagamento) al loro canale, ottenendo dei privilegi (emoticon personalizzate, ecc.). Inoltre, gli utenti hanno un portafoglio di bit (moneta virtuale che possono acquistare tramite la piattaforma), che possono usare per fare donazioni agli streamer.
+    Oltre a chattare pubblicamente, gli utenti possono scambiarsi messaggi privati.
+    La base di dati deve supportare le seguenti operazioni:
+    \begin{itemize}
+        \item Una volta al giorno si controllano le condizioni per la qualifica di affiliate. 
+        \item  Una volta a settimana viene calcolata la classifica degli streamer più seguiti.
+    \end{itemize}
+    
+ 
+Si può assumere che i contenuti multimediali vengano gestiti da una piattaforma di video hosting e
+che quindi sia sufficiente memorizzare un URL.
+ \end{quote} 
+    \subsection{Glossario dei termini}
+        \begin{quote}
+        \begin{tabular}{|p{2.6cm}|p{7.0cm}|p{2.3cm}|p{3.4cm}|}
+            \hline
+            \multicolumn{4}{|c|}{}\\
+            \multicolumn{4}{|c|}{\textbf{\Large GLOSSARIO DEI TERMINI}}\\
+            \multicolumn{4}{|c|}{}\\
+            \hline
+            \medskip & \medskip & \medskip & \medskip  \\
+            TERMINE & DESCRIZIONE & SINONIMI & COLLEGAMENTI\\
+            \medskip & \medskip & \medskip & \medskip  \\
+            \hline
+            Utente & L’utilizzatore del servizio Twitch, può essere spettatore e/o streamer & Iscritto & Streamer, canale, subscription, messaggio privato, donazione.\\
+            \hline
+           Visitatore & Caso particolare di utente: individuo non registrato al servizio che può visualizzare le live in modo anonimo &  & Contenuto multimediale\\
+            \hline
+            Streamer & Tipo di utente che possiede un canale e crea contenuti multimediali & Creatore di contenuti & Utente, calendario, donazione, canale.\\
+            \hline
+             Spettatore & Tipo di utente iscritto alla piattaforma che può visualizzare contenuti multimediali e svolgere altre azioni &  & Utente.\\
+            \hline
+            Calendario & contiene le eventuali prossime live programmate da uno streamer &  & Streamer \\
+            \hline
+            Contenuto multimediale & Contenuto video e/o audio &  & Canale, utente, visitatore \\
+            \hline
+             Live & Contenuto video e audio trasmesso in tempo reale da uno o più streamer &	Dirette, stream  &Contenuto multimediale, messaggi live. \\
+            \hline
+             Video &	Contenuto video e audio ricavato dalle live passate &  &Contenuto multimediale. \\
+            \hline
+            Clip &	Video di breve durata estratti dalle live &   &Contenuto multimediale. \\
+            \hline
+            
+        \end{tabular}
+        \end{quote}
+
+    \subsection{Requisiti rivisti}
+     \begin{quote}
+Legenda: 
+\begin{itemize}
+    \item Testo barrato in rosso: porzione di testo rimossa rispetto ai requisiti iniziali.
+    \item Testo di colore nero: porzione di testo mantenuta dai requisiti iniziali.
+    \item Testo di colore blu: porzione di testo aggiunta nei requisiti rivisti
+    \item Testo evidenziato: sono stati evidenziati in colori diversi i vocaboli presenti nel glossario dei termini.\\
+\end{itemize}
+
+
+
+
+
+    Si vuole realizzare una base di dati per un servizio che permette di fare live streaming su vari argomenti. Il live streaming (o, più sinteticamente, la \colorbox{yellow}{live}) permette di interagire con il pubblico in tempo reale grazie a feed video, chat e altro.
+Ogni utente può essere \colorbox{SpringGreen}{spettatore} o \colorbox{green}{streamer}, o entrambi. 
+
+\textcolor{red}{\sout {Gli spettatori possono essere registrati al
+servizio oppure possono guardare le live in modo anonimo. }}
+\textcolor{blue}{Gli \colorbox{SpringGreen}{spettatori} sono \colorbox{SkyBlue}{utenti} registrati oppure \colorbox{SkyBlue}{utenti} visitatori(non registrati che guardano le \colorbox{yellow}{live} in modo anonimo.}
+
+\textcolor{red}{\sout {Per registrarsi, gli utenti devono indicare
+nome utente, password, data di nascita, numero di telefono o indirizzo mail.}}
+\textcolor{blue}{Per la registrazione degli \colorbox{SkyBlue}{utenti} rappresentiamo: il nome utente, una password, la data di nascita, il numero di telefono o l’indirizzo mail.}
+
+Gli \colorbox{SkyBlue}{utenti} iscritti possono: chattare, seguire lo \colorbox{green}{streamer}, creare dirette.
+Gli \colorbox{green}{streamer} hanno ciascuno un canale,
+\textcolor{red}{\sout { che può essere caratterizzato tramite una descrizione. Per
+ogni canale, è possibile specificare una lista di social associati (ad esempio Instagram, YouTube,
+ecc.), un’immagine profilo e anche un trailer.}}
+\textcolor{blue}{per \colorbox{yellow}{canale} rappresentiamo: l’username dello \colorbox{green}{streamer}, una descrizione opzionale, una lista opzionale di social associati (salviamo l’url del profilo di ogni social indicato), un’immagine del profilo e un trailer.}
+In ogni canale possono
+\textcolor{red}{\sout {esserci}}
+\textcolor{blue}{essere presenti contenuti multimediali di vario tipo: }
+\colorbox{yellow}{live}, video (live passate) e clip (video di durata breve). 
+ Le \colorbox{yellow}{live} possono anche non diventare video del canale.
+
+
+\textcolor{red}{\sout {Ognuno ha un titolo, una durata, appartiene a una categoria e può essere associato a
+diversi tag. Per ogni live viene memorizzato il numero medio di spettatori mentre per i video e le clip
+il numero di visualizzazioni. }}
+\textcolor{blue}{Per le \colorbox{yellow}{live} rappresentiamo: il titolo, la durata prevista, la categoria a cui appartiene e il link per la visione; per i video rappresentiamo: il titolo, la durata, la categoria a cui appartiene e il link per la visione; per le clip rappresentiamo: il titolo, la durata, la categoria a cui appartiene e il link per la visione.}
+
+Per ogni \colorbox{green}{creatore di contenuti},
+\textcolor{red}{\sout {si memorizzano il numero di live effettuate, il numero di minuti
+trasmessi, il numero medio di spettatori simultanei. Inoltre, sulla pagina del canale viene visualizzato
+il numero di follower.}}
+\textcolor{blue}{rappresentiamo: il numero di \colorbox{yellow}{live} effettuate, il numero di minuti trasmessi, il numero medio di \colorbox{SpringGreen}{spettatore} simultanei e il numero di follower.}
+
+\textcolor{red}{\sout {Quando uno streamer rispetta determinati parametri di performance ( }}
+\textcolor{blue}{Uno \colorbox{green}{streamer} può diventare affiliate quando }
+ha un minimo di 500 minuti trasmessi, una media di tre o più \colorbox{SpringGreen}{spettatore} simultanei, almeno 50 follower
+\textcolor{red}{\sout {), può diventare affiliate.}}
+Le
+\textcolor{red}{\sout {stream}}
+\textcolor{blue}{\colorbox{yellow}{live}}
+hanno degli orari. Ogni \colorbox{green}{streamer} ha un calendario in cui può dire quando farà stream e indicare il titolo delle prossime \colorbox{yellow}{live}.
+
+
+\textcolor{blue}{Per \colorbox{yellow}{live} rappresentiamo: l’orario, un titolo che è opzionale e un attributo aggiuntivo chiamato visibilità per permettere allo \colorbox{green}{streamer} di decidere se mettere pubblica o no sul suo calendario la \colorbox{yellow}{live} programmata.}
+\textcolor{red}{\sout {I viewer}}
+\textcolor{blue}{Gli \colorbox{SkyBlue}{\colorbox{SkyBlue}{utenti}}}
+possono diventare follower del canale degli \colorbox{green}{streamer} che preferiscono
+
+\textcolor{red}{\sout {, e le loro preferenze sono raccolte in un elenco di follower a cui possono accedere dal loro profilo.}}
+\textcolor{blue}{Per memorizzare le preferenze in utente salviamo gli account seguiti. }
+\textcolor{red}{\sout {I viewer}}
+Gli \colorbox{SkyBlue}{utenti} possono inoltre supportare gli \colorbox{green}{streamer} tramite la subscription (a pagamento) al loro canale, ottenendo dei privilegi (emoticon personalizzate, ecc.). Inoltre, gli utenti hanno un portafoglio di bit (moneta virtuale che possono acquistare tramite la piattaforma), che possono usare per fare donazioni agli streamer.
+Oltre a chattare pubblicamente, gli \colorbox{SkyBlue}{utenti} possono scambiarsi messaggi privati.
+La base di dati deve supportare le seguenti operazioni:
+\begin{itemize}
+    \item Una volta al giorno si controllano le condizioni per la qualifica di affiliate.
+    \item Una volta a settimana viene calcolata la classifica degli \colorbox{green}{streamer} più seguiti.
+\end{itemize}
+Si può assumere che i contenuti multimediali vengano gestiti da una piattaforma di video hosting e
+che quindi sia sufficiente memorizzare un URL.
+\end{quote}
+
+
+  \subsection{Requisiti rivisti suddivisi per categorie}
+\begin{quote}
+  
+Si intende creare un database per un servizio di live streaming su diversi temi, con le seguenti categorie:
+
+\begin{itemize}
+    \item Generale
+        \begin{itemize}
+            \item Implementazione di un sistema per il live streaming su varie tematiche, consentendo l'interazione in tempo reale tramite video, chat, etc.
+        \end{itemize}
+    \item Utenti
+        \begin{itemize}
+            \item Definizione degli utenti con nome univoco, dati personali opzionali (telefono o email), e la possibilità di essere spettatori e/o streamer. Inclusa la comunicazione tramite messaggi privati.
+        \end{itemize}
+    \item Streamer
+        \begin{itemize}
+            \item Rappresentazione degli streamer come utenti iscritti a Twitch, capaci di creare contenuti multimediali (live, video, clip). Possibilità di ottenere il titolo di affiliate rispettando specifici requisiti di attività e seguito.
+        \end{itemize}
+    \item Calendario
+        \begin{itemize}
+            \item Archiviazione delle prossime live programmate dagli streamer.
+        \end{itemize}
+    \item Canali
+        \begin{itemize}
+            \item Canali associati agli streamer, con descrizione e contenuti multimediali vari.
+        \end{itemize}
+    \item Contenuti multimediali
+        \begin{itemize}
+            \item Definizione di contenuti digitali come live, video (registrazioni di live passate), e clip (estratti da live).
+        \end{itemize}
+    \item Live
+        \begin{itemize}
+            \item Trasmissione multimediale in diretta con interazione degli spettatori, salvabile come video e con calcolo medio di spettatori simultanei.
+        \end{itemize}
+    \item Video
+        \begin{itemize}
+            \item Contenuti video ottenuti dalle registrazioni delle live, con conteggio delle visualizzazioni.
+        \end{itemize}
+    \item Clip
+        \begin{itemize}
+            \item Estratti brevi di momenti specifici delle live, con conteggio delle visualizzazioni.
+        \end{itemize}
+    \item Messaggi
+        \begin{itemize}
+            \item Scambio di testo tra utenti (privati o durante le live), con dati di mittente, destinatario, testo, e orario.
+        \end{itemize}
+    \item Subscription
+        \begin{itemize}
+            \item Supporto a pagamento agli streamer tramite abbonamenti, con benefici come emoticon personalizzate.
+        \end{itemize}
+    \item Follower
+        \begin{itemize}
+            \item Utenti che seguono un canale di uno streamer.
+        \end{itemize}
+    \item Affiliate
+        \begin{itemize}
+            \item Status ottenibile dagli streamer che rispettano specifici requisiti di attività e seguito.
+        \end{itemize}
+    \item Operazioni
+        \begin{itemize}
+            \item Implementazione di operazioni come la classifica degli streamer più seguiti e il controllo dello status di affiliate.
+        \end{itemize}
+\end{itemize}
+
+\end{quote}
+    \subsection{Schema E-R principale + business rules}
+    \begin{itemize}
+        \item Schema E-R
+           \end{itemize}
+
+\end{quote}
+\end{quote}
+                 {\centering
+ \includesvg[scale=0.8]{1SCHEMAERCORRETTOFINITO.svg}\\ \par
+        }\\
+          \clearpage      
+
+\begin{quote}
+       
+       \begin{itemize}
+        \item \textbf{BUSINESS RULES}
+            \begin{itemize}
+                \item Business Rules derivate dal testo
+                    \begin{itemize}
+                        \item Dal testo si ricava che ogni Streamer ha un canale, quindi possiede per forza solamente un canale.
+                        \item  L'utente, in fase di registrazione deve indicare: il proprio nome, cognome, la data di nascita, il numero di telefono o l'indirizzo email e uno username (che deve essere univoco).
+                        \item Qualsiasi utente registrato può essere uno streamer, per essere streamer però, bisogna prima creare un canale che può essere caratterizzato tramite una descrizione.
+                        \item Un contenuto multimediale può essere di tre tipi: Live, Video o clip.\\
+                    \end{itemize}\\
+                \item Business Rules introdotte e vincoli
+                    \begin{itemize}
+                       \item Nel corso dell'analisi della base di dati da sviluppare è stato deliberato, in contrasto con quanto avviene sulla piattaforma Twitch, di separare in due entità distinte gli utenti registrati e coloro che producono contenuti multimediali. Per illustrare questa soluzione è stato stabilito che una volta iscritti alla piattaforma tutti sono utenti, tuttavia coloro che iniziano a creare contenuti multimediali diventano automaticamente streamer, possessori di un canale.
+\item Nel caso in cui durante la registrazione l'utente fornisca l'indirizzo e-mail anziché il numero di telefono, l'e-mail deve seguire il formato (nomeutente@dominio.it) e non deve essere già presente nella lista degli utenti.
+\item Se durante la registrazione l'utente preferisce fornire il numero di telefono anziché l'indirizzo e-mail, questo deve seguire il formato (+39 123456789) e non deve essere già presente tra gli utenti registrati.
+\item La password scelta dall'utente durante la registrazione può contenere al massimo 12 caratteri.
+\item È stato scelto di includere nel canale un attributo denominato "nomeCanale", che rappresenta il nome del canale posseduto dallo streamer. Naturalmente, il "nomeCanale" è stato definito come unico, per evitare la presenza di canali con lo stesso nome.
+\item Un utente che sottoscrive (a pagamento) uno streamer deve necessariamente diventare un follower dello streamer.
+\item Per effettuare una donazione, l'utente deve avere un saldo di bit sufficiente.
+\item Lo streamer ha il potere di decidere se inserire nel calendario la prossima diretta o meno, e può anche optare per la visibilità della programmazione della diretta agli altri utenti.
+\item Per calcolare correttamente il numero di visualizzazioni dei video e delle clip (contando solo una visualizzazione per utente non registrato e assicurandosi che la stessa visualizzazione non venga conteggiata più volte dallo stesso indirizzo IP), è stato deciso di registrare l'indirizzo IP degli utenti non registrati nel database, creando così un'entità denominata "visitatore" per rappresentare questo tipo di spettatore delle dirette.
+\item Ogni canale viene identificato univocamente tramite un attributo chiamato "nome_canale".
+                         
+                        
+                    \end{itemize}
+            \end{itemize}
+    \end{itemize}
+
+\end{quote}
+\section{Progettazione logica}
+\begin{quote}
+    \subsection{Tavola dei volumi}
+   
+        \begin{quote}
+       
+            \begin{tabular}{|p{5.5cm}|p{4.0cm}|p{4.5cm}|}
+            \hline
+            \multicolumn{3}{|c|}{}\\
+            \multicolumn{3}{|c|}{\textbf{\Large TAVOLA DEI VOLUMI}}\\
+            \multicolumn{3}{|c|}{}\\
+            \hline
+            \medskip & \medskip & \medskip \\
+            CONCETTO & TIPO & VOLUME \\
+            \medskip & \medskip & \medskip   \\
+            
+            \hline
+Utente &Entità& 17.000.000 \\
+\hline
+Spettatore &Entità& 11.050.000\\
+\hline
+Streamer&Entità&5.950.000\\
+\hline
+Agenda &Entità& 23.800.000\\
+\hline
+Canale &Entità& 5.950.000 \\
+\hline
+Iscrizione &Entità& 8.500.000\\
+\hline
+Visitatore &Entità& 4.250.000\\
+\hline
+Dirette&Entità& 35.700.000\\
+\hline
+Video &Entità& 21.420.000\\
+\hline
+Clip&Entità& 12.852.000 \\
+\hline
+Videoclip&Entità& 34.272.000\\
+\hline
+Contenuto multimediale&Entità& 69.972.000\\
+\hline
+Messaggio privato &Associazione& 148.750.000 \\
+\hline
+Chat Live &Associazione& 714.000.000\\
+\hline
+Dona &Associazione& 17.000.000\\
+\hline
+Segue &Associazione& 1.700.000.000\\
+\hline
+Effettua &Associazione& 8.500.000\\
+\hline
+Registra & Associazione& 8.500.000\\
+\hline
+Possiede &Associazione& 5.950.000\\
+\hline
+Genera &Associazione& 69.972.000\\
+\hline
+Guarda &Associazione& 4.675.000.000\\
+\hline
+Visualizza in modo anonimo &Associazione& 80.750.000 \\
+\hline
+        \end{tabular} \\
+        \\   
+        Di seguito viene descritto come sono stati stimati i volumi presenti in tabella.
+        
+            
+\begin{itemize}
+\item Utente: corrisponde al numero di utenti registrati alla piattaforma; considerando che gli iscritti a Twitch a fine 2022 erano circa 14 milioni, si stima il totale degli utenti in 16 milioni.
+\item Spettatore: il numero di spettatori è stato stimato in 11.050.000 in base ai dati online e al numero totale di utenti registrati.
+\item Streamer: il numero di streamer è stato valutato in 5.950.000 in base ai dati online e al totale degli utenti registrati.
+\item Agenda: considerando che ogni streamer aggiunge un record quando programma una live, si stima il numero totale in 23.800.000.
+\item Canale di trasmissione: considerando che ogni streamer possiede un canale, si stima che ce ne siano 6.000.000.
+\item Abbonamento: stimando che la media di iscrizioni effettuate dagli utenti ai canali sia di circa 0,5 per utente registrato, il totale previsto è di 8.500.000.
+\item Visitatore: il numero di visitatori anonimi è stato stimato in 4.250.000.
+\item Dirette: considerando il numero medio di live trasmesse da ogni streamer, si stima il totale in 35.700.000.
+\item Video: stimando che circa il 60\% delle live vengano salvate come video, si stima il numero di video in 21.420.000.
+\item Clip: considerando che circa il 30\% dei video genera clip, si stima il numero di clip in 12.852.000.
+\item Video-clip: la somma di clip e video, risultando in 34.272.000.
+\item Contenuto multimediale: comprende live, video e clip, con un totale stimato di 69.972.000.
+\item Messaggio privato: stimato in 148.750.000 messaggi.
+\item Chat Live: stimata in 714.000.000.
+\item Dona: si stima il totale delle donazioni in 17.000.000.
+\item Segue: il totale dei follower è stato stimato in 5.000.000.000.
+\item Subscription: considerando le iscrizioni effettuate agli utenti ai canali, si stima il totale in 8.500.000.
+\item Effettua: considerando le iscrizioni effettuate agli utenti ai canali, si stima il totale in 8.500.000.
+\item Possiede: con una cardinalità 1 a 1, si stima il totale in 5.950.000.
+\item Genera: corrisponde al totale dei contenuti multimediali, stimato in 69.972.000
+\item Visualizzazione: il totale delle visualizzazioni degli utenti registrati è stato stimato in 4.675.000.000
+\item Visualizzazione anonima: il totale delle visualizzazioni dei visitatori anonimi è stato stimato in 95.000.000
+\end{itemize}
+        
+        \end{quote}
+        \clearpage
+    \subsection{Tavola delle operazioni}
+    
+        \begin{quote}
+        Nella seguente tabella sono state inserite le operazioni più importanti con una stima della frequenza con cui vengono svolte.\\ \\
+            \begin{tabular}{|p{3.5cm}|p{5.5cm}|p{1.5cm}|p{3.5cm}|}
+                \hline
+                    \multicolumn{4}{|c|}{}\\
+                    \multicolumn{4}{|c|}{\textbf{\Large TAVOLA DELLE OPERAZIONI}}\\
+                    \multicolumn{4}{|c|}{}\\
+                \hline
+                \medskip & \medskip & \medskip & \medskip  \\
+                    OPERAZIONE & DESCRIZIONE & TIPO & FREQUENZA\\
+                \medskip & \medskip & \medskip & \medskip  \\
+                \hline
+                    Registrazione Utente & Utenti che si registrano alla piattaforma & I & 100.000/day \\
+               
+                \hline Programmazione Live & Programmazione live da parte degli streamer sul calendario & I & 2.000 al giorno\\
+                \hline
+                Trasmissione Live & Trasmissione di contenuti multimediali in diretta & I &7.500 al giorno\\
+                \hline
+                    Controllo Affiliate & Controllo delle condizioni per la qualifica di affiliate & B & 1 volta al giorno\\
+                \hline
+                    Generazione contenuto multimediale & Contenuti multimediali generati dagli Streamer attraverso i proprio canali& I &15.000 al giorno\\
+                \hline
+                   Invio messaggi Live & Invio dei messaggi durante una diretta & I & 20 messaggi totali per ogni diretta \\
+                \hline 
+                   Invio messaggi privati & Invio di messaggi tra due utenti & I & 30.000 messaggi inviati al giorno\\
+                \hline
+                    Utente inizia a seguire un canale & Un utente decide di diventare follower di un canale & I &7.000.000 al giorno\\
+                \hline
+                 Utente visualizza pagina del canale & Visite totali alle pagine dei canali degli streamer& I &35.000.000 al giorno\\
+                \hline
+                    Utente effettua subscription & Utenti effettuano iscrizione a pagamento ai canali degli streamer & I &300 al giorno\\
+                \hline
+                    Donazione & Un utente decide di fare una donazione a uno streamer con i bit che ha in possesso & I & 2500 donazioni totali al giorno \\
+                \hline
+                    Classifica Streamer & Redazione della classifica degli Streamer più seguiti & B & 1 volta alla settimana \\ 
+                \hline 
+            \end{tabular}\\
+            \vspace{0.5cm}\\
+            Legenda tipo di operazione: 
+            \begin{itemize}
+                \item I = Interattiva: operazioni interattive che hanno origine da richieste degli utenti della base dati.
+                \item  B = Batch: operazioni pianificate da altri programmi in particolari momenti della giornata.
+            \end{itemize}
+        \end{quote}
+    \subsection{Ristrutturazione dello schema E-R}
+    \begin{quote}
+    \subsubsection{Analisi delle ridondanze:}
+    Di seguito viene svolta l'analisi relativa al mantenimento o all'eliminazione di una ridondanza presente nello schema E-R.\\ \\
+         
+           È stato deciso di svolgere l'analisi per stabilire se introdurre oppure no la ridondanza che potrebbe essere utile per diminuire le operazioni sul database che si verificano ogni volta che un utente visualizza la pagina di un canale con il relativo numero di follower.\\ \\
+       Schema di operazione:\\ \\
+ {\centering
+ \includesvg[scale=1.0]{analisiridondanzafollower.svg}\\ \par
+        } \\
+        \vspace{0.4cm}\\
+             \begin{tabular}{|p{4.4cm}|p{5.5cm}|p{4.0cm}|}
+                \hline
+                    \multicolumn{3}{|c|}{}\\
+                    \multicolumn{3}{|c|}{\textbf{ TAVOLA DEI VOLUMI}}\\
+                    \multicolumn{3}{|c|}{}\\
+                \hline
+                \medskip & \medskip & \medskip  \\
+                
+                    Concetto & Tipo & Volume\\
+                \medskip & \medskip & \medskip  \\
+                \hline
+                    Utente & Entità & 20.000.000 \\ 
+                    \hline
+                    Segue & Associazione &  5.000.000.000\\  
+                    \hline
+                    Canale & Entità & 7.000.000 \\      
+               
+                \hline
+                \end{tabular} \newline
+
+ \vspace{0.7cm}\\
+
+                \begin{tabular}{|p{2.0cm}|p{4.0cm}|p{1.5cm}|p{6.0cm}|}
+                \hline
+                    \multicolumn{4}{|c|}{}\\
+                    \multicolumn{4}{|c|}{\textbf{ TAVOLA DELLE OPERAZIONI}}\\
+                    \multicolumn{4}{|c|}{}\\
+                \hline
+                \medskip & \medskip & \medskip & \medskip  \\
+                
+                    Operazione & Descrizione & Tipo & Frequenza\\
+                \medskip & \medskip & \medskip & \medskip  \\
+                \hline
+                    1 & Utente inizia a seguire un canale & I & 1 nuovo follower per canale ogni giorno, 7.000.000 canali totali. Totale: 7.000.000 al giorno. \\                
+                \hline
+                2 & Utente visualizza pagina del canale & I & 5 al giorno per ogni canale, 7.000.000 canali totali. Totale: 35.000.000  al giorno.  \\                
+                \hline
+                \end{tabular}\\
+
+
+                
+       
+      
+         \vspace{0.5cm}\\
+         \clearpage
+       \textbf{ Scenario A: ASSENZA DI RINDONDANZA}\\ \\
+        Operazione 1: Utente inizia a seguire il canale\\ \\
+        
+{\includesvg[scale=1.0]{analisiridondanzafollower.svg}\\ \par
+        }\\ \\
+       Considerando che gli accessi in scrittura sono più onerosi di quelli in lettura, per fare una stima corretta, il costo di una scrittura  viene contato come il doppio di una lettura.\\
+
+
+
+        \begin{tabular}{|p{3.5cm}|p{5.5cm}|p{2.0cm}|p{2.8cm}|}
+                \hline
+                    \multicolumn{4}{|c|}{}\\
+                    \multicolumn{4}{|c|}{\textbf{ TAVOLA DEGLI ACCESSI}}\\
+                    \multicolumn{4}{|c|}{}\\
+                \hline
+                \medskip & \medskip & \medskip & \medskip  \\
+                
+                    Concetto & Costrutto & Accessi & Tipo\\
+                \medskip & \medskip & \medskip & \medskip  \\
+                \hline
+                    Segue & Associazione & 7.000.000 & Scrittura \\
+               
+                \hline
+                \end{tabular} \\
+ \vspace{0.5cm}\\
+                OPERAZIONE 2: Stampa sulla pagina del canale il numero di follower\\ \\
+{\includesvg[scale=1.0]{operazione2assenzaridondanza.svg}\\ \par
+        }\\
+         \vspace{0.2cm}\\
+                 \begin{tabular}{|p{3.5cm}|p{3.5cm}|p{4.0cm}|p{2.8cm}|}
+                \hline
+                    \multicolumn{4}{|c|}{}\\
+                    \multicolumn{4}{|c|}{\textbf{ TAVOLA DEGLI ACCESSI}}\\
+                    \multicolumn{4}{|c|}{}\\
+                \hline
+                \medskip & \medskip & \medskip & \medskip  \\
+                
+                    Concetto & Costrutto & Accessi & Tipo\\
+                \medskip & \medskip & \medskip & \medskip  \\
+                \hline
+                    Canale & Entità & 7.000.000 * 5       Totale: 35.000.000 & Lettura \\
+                     \hline
+                    Segue & Associazione & 5.000.000.000 * 5   Totale: 25.000.000.000 & Lettura \\
+
+                    
+               
+                \hline
+                \end{tabular}
+                \\
+                \medskip\\
+                 Numero stimato di canali: 7.000.000.\\
+                Ipotesi di 5 visite al giorno per ogni pagina del canale, quindi 7.000.000 * 5 = 35.000.000.
+                Numero stimato di occorrenze di Segue: 5.000.000.\\
+                Ipotizzando che ci siano 5 visite al giorno per ogni canale: 5.000.000.000 * 5 = 25.000.000.000.
+\clearpage
+       \textbf{ Scenario B: PRESENZA DI RIDONDANZA}\\
+
+         Operazione 1: Utente inizia a seguire il canale\\
+        
+{\centering
+  \includesvg[scale=1.0]{analisiridondanzafollowerconnumerofollower.svg}\\ \par
+} \\
+ \vspace{0.5cm}
+       Considerando che gli accessi in scrittura sono più onerosi di quelli in lettura, per fare una stima corretta, il costo di una scrittura  viene contato come il doppio di una lettura.\\
+
+        \begin{tabular}{|p{3.5cm}|p{5.5cm}|p{2.0cm}|p{2.8cm}|}
+                \hline
+                    \multicolumn{4}{|c|}{}\\
+                    \multicolumn{4}{|c|}{\textbf{ TAVOLA DEGLI ACCESSI}}\\
+                    \multicolumn{4}{|c|}{}\\
+                \hline
+                \medskip & \medskip & \medskip & \medskip  \\
+                
+                    Concetto & Costrutto & Accessi & Tipo\\
+                \medskip & \medskip & \medskip & \medskip  \\
+                \hline
+                    Segue & Associazione & 7.000.000 & Scrittura \\
+                     \hline
+                    Canale & Entità & 7.000.000 & Lettura \\
+                     \hline
+                    Canale & Entità & 7.000.000 & Scrittura \\
+               
+                \hline
+                \end{tabular}\\
+
+                OPERAZIONE 2: Stampa sulla pagina del canale il numero di follower.\\
+
+                Schema di operazione:\\
+                       
+{\centering
+  \includesvg[scale=1.0]{analisiridondanzafollowstampadatisullapagina.svg}\\ \par
+}\\ \\
+\vspace{0.5cm}\\
+                 \begin{tabular}{|p{3.5cm}|p{2.5cm}|p{3.0cm}|p{2.8cm}|}
+                \hline
+                    \multicolumn{4}{|c|}{}\\
+                    \multicolumn{4}{|c|}{\textbf{ TAVOLA DEGLI ACCESSI}}\\
+                    \multicolumn{4}{|c|}{}\\
+                \hline
+                \medskip & \medskip & \medskip & \medskip  \\
+                
+                    Concetto & Costrutto & Accessi & Tipo\\
+                \medskip & \medskip & \medskip & \medskip  \\
+                \hline
+                    Canale & Entità & 35.000.000 & Lettura \\                
+               
+                \hline
+                \end{tabular}\\
+                \vspace{0.2cm}\\
+               Numero di canali: 7.000.000, numero di visite per ogni canale al giorno: 5.\\ 7.000.000 * 5 = 35.000.000 circa.\\
+        
+
+\clearpage
+
+       \textbf{ Scenario A: ASSENZA DI RIDONDANZA} 
+\begin{itemize}
+    \item 
+            Spazio: 0 byte (si considera solo lo spazio occupato dalla ridondanza. Se non c’è l’attributo, lo spazio è 0) 
+
+ 
+ 
+\item Tempo: 
+\begin{itemize}
+    \item Operazione 1: 7.000.000 accessi in scrittura al giorno.
+    \item Operazione 2: 35.000.000 accessi in lettura (Canale) al giorno +  25.000.000.000 accessi in lettura (Segue) al giorno.
+\end{itemize}
+  
+ Contando doppi gli accessi in scrittura perché più onerosi: \\ 
+ Operazione 1:( 7.000.000 * 2 ) = 14.000.000 \\
+ Operazione 2: 25.035.000.000\\
+ Totale di 25.049.000.000 accessi al giorno.\\
+
+\end{itemize}
+\vspace{15pt}\\
+       \textbf{ Scenario B: PRESENZA DI RIDONDANZA} 
+
+\begin{itemize}
+    \item 
+            Spazio: 3 byte (si considera solo lo spazio occupato dalla ridondanza. Se non c’è l’attributo, lo spazio è 0).
+
+            Assumendo di usare 3 byte (mediumint) per memorizzare il numero di follower di ogni canale: 3 * 7.000.000 = 21.000.000 byte (7.000.000 di canali con circa 714 follower ciascuno).
+
+ 
+ 
+\item Tempo: 
+\begin{itemize}
+    \item Operazione 1:  7.000.000 accessi in scrittura (Segue) + 7.000.000 accessi in lettura (Canale) +   7.000.000 accessi in scrittura (Canale) al giorno.
+    \item Operazione 2: 35.000.000 accessi in lettura al giorno.
+\end{itemize}
+ 
+  
+ Contando doppi gli accessi in scrittura perché più onerosi: \\
+ Operazione 1: (7.000.000 * 2) + 7.000.000 + (7.000.000 * 2) = 35.000.000 accessi al giorno.\\
+ Operazione 2: 35.000.000 accessi al giorno.\\
+ Totale di 70.000.000 accessi al giorno.
+\end{itemize}
+
+\vspace{20pt}\\
+      \textbf{ANALISI DEI RISULTATI OTTENUTI:}\\ \\
+Con ridondanza 24.983.000.000 accessi al giorno in meno.\\ \\
+Con ridondanza 21.000.000 byte = 21 Megabyte occupati in memoria in più.
+
+Analizzando i risultati sopra riportati conviene nettamente mantenere la ridondanza in quanto si risparmiano moltissimi accessi al giorno a fronte di uno spazio occupato in memoria abbastanza trascurabile.
+\clearpage
+    \subsubsection{Eliminazione delle generalizzazioni}
+    
+  
+    Sullo schema E/R iniziale sono state riportate due generalizzazioni: la prima si trova in utente per differenziare un utente di tipo streamer da un utente di tipo spettatore mentre la seconda generalizzazione è presente in contenuto multimediale.
+        Di seguito verrà illustrato come si è deciso di rimuoverle:
+           la generalizzazione che viene studiata è quella che genera l’entità Contenuto Multimediale (generalizzazione Totale/Esclusiva) e a sua volta l'entità Videoclip (generalizzazione Totale/Esclusiva):\\
+
+        
+        \\
+        {\centering\includesvg[scale=1.0]{Generalizzazionecontenutomultimediale.svg}\\ \par
+        }\\
+        \vspace{0.5cm}\\
+      \begin{itemize} 
+        \item \textbf{Analisi generalizzazione: Videoclip con entità figlie: Video e Clip.}
+         \\
+         \vspace{0.5cm}\\
+        {\centering\includesvg[scale=1.0]{GeneralizzazioneVideoclip.svg}\\ \par
+        }
+    \vspace{0.5cm}\\
+        La generalizzazione che produce l'entità Videoclip attraverso le due entità figlie: Video e Clip è stata rimossa raggruppando le entità figlie nell'entità genitore aggiungendo quindi in Videoclip un attributo denominato: tipo per permettere di memorizzare se il Videoclip è di tipo video o di tipo clip.\\ Il risultato è raffigurato nell'immagine successiva: \\
+
+       
+         
+
+        {\centering
+            \includesvg[scale=1.0]{EliminazionegeneralizzazioneVideoclip.svg}\\ \par
+        }
+         \vspace{0.5cm}\\
+       \clearpage
+     Successivamente è stata analizzata la generalizzazione: \\
+     \item \textbf{Contenuto multimediale con entità figlie: Videoclip e Live.}\\
+        
+       
+        {\centering
+             \includesvg[scale=1.0]{Generalizzazionecontenutomultimediale2.svg}\\ \par
+        }
+        \vspace{0.5cm}\\
+        Anche in questo caso è stato deciso di raggruppare le due entità figlie nell'entità padre aggiungendo quindi nell'entità: Contenuto multimediale un attributo chiamato tipo che è l’informazione che permette di distinguere le occorrenze in base al tipo di contenuto multimediale (Clip, Video e Live).\\ In Contenuto multimediale sono stati trasferiti anche gli attributi: Numero visualizzazioni e Numero visualizzazioni medie, i quali però sono stati definiti come opzionali dato che per esempio quando un contenuto è di tipo Live, solamente l'attributo Numero Visualizzazioni medie ha valore mentre quando il contenuto è di tipo Clip o Video ha valore solo l'attributo: Numero visualizzazioni.\\ Il risultato è raffigurato nell'immagine successiva: \\
+        
+{\centering
+  \includesvg[scale=1.0]{Eliminazionegeneralizzazione.svg}\\ \par
+}
+
+
+       
+        
+    \end{itemize}
+    \subsubsection{Eventuale partizionamento/accorpamento di entità e associazioni}
+    Nello schema E-R iniziale, non sono presenti entità e/o associazioni da partizionare o accorpare.\\
+    \subsubsection{Eventuale eliminazione degli attributi composti e/o multivalore.}
+        
+           
+             Nel primo schema E-R non sono presenti attributi composti mentre sono stati inseriti due attributi multivalore: l'attributo social nell'entità canale e l'attributo tag nell'entità Contenuto multimediale. Di seguito viene rappresentata la procedura per rappresentarli nella maniera corretta.
+           \begin{itemize}
+            \item Attributo multivalore Tag: è stata creata un'entità denominata TAG collegata all'entità contenuto multimediale per permettere il salvataggio di più tag per ogni occorrenza di contenuto multimediale. Nell'immagine seguente è rappresentato il risultato:\\
+            
+            {\centering
+  \includesvg[scale=1.0]{ENTITATAG.svg}\\ \par
+} 
+
+    
+             \item Attributo multivalore Social: è stata creata un'entità denominata SOCIAL collegata all'entità canale per permettere l'eventuale presenza di più account social collegati al Canale dello streamer. Nell'immagine seguente è rappresentato il risultato:\\
+
+                     {\centering
+  \includesvg[scale=1.0]{ENTITAsocial.svg}\\ \par
+}
+             
+        \end{itemize}
+    \subsubsection{Eventuale scelta degli identificatori principali}
+    Nel primo schema E-R sono già stati inseriti gli identificatori principali corretti, di conseguenza non è stato necessario sceglierli successivamente.
+     \end{quote}
+    \subsection{Schema E-R ristrutturato + business rules}
+         {\centering
+ \includesvg[scale=0.7]{SCHEMAERCORRETTORISTRUTTURATO.svg}\\ \par
+        }
+    \begin{itemize}
+        \item Un utente inizialmente si può registrare in qualità di spettatore ma dal momento in cui crea un canale diventa di tipo streamer.
+        \item Quando un utente partecipa all'associazione con streamer deve per forza avere l'attributo tipo con valore: streamer.
+        \item La chat Live è collegata a contenuto multimediale solamente quando il tipo di contenuto è: Live.
+        \item Un canale non può essere eliminato se non viene anche eliminato lo streamer.
+        \item È stato previsto che il calcolo dei visualizzatori medi in contemporanea venga svolto tramite il programma che utilizza la base di dati, per esempio se si utilizzasse il php si potrebbe gestire questo calcolo attraverso una SESSION dedicata.
+        \item Se viene eliminato un contenuto multimediale, deve essere anche eliminato il record corrispondente dalle tabelle: genera, visualizza, visualizzainanonimo e tag.
+        
+        
+        
+        
+    \end{itemize}
+    
+
+    \subsection{Schema relazionale (con indicazione dei vincoli di integrità referenziale).}
+    \begin{itemize}
+
+      \item Utente(\underline{username},password, datanascita, bit, telefono*, email*, tipo)\\
+        
+       \item Messaggioprivato (\underline{mittente, dataOra, testo, Destinatario})\\
+	   MessaggioPrivato(mittente) referenzia Utente(username)\\
+	    MessaggioPrivato(Destinatario) referenzia Utente(username)\\
+
+        \item ChatLive(\underline{Mittente, dataOra, testo, Live})\\
+	       ChatLive (Mittente) referenzia Utente(username)\\
+	       ChatLive (Live) referenzia ContenutoMultimediale(url)\\
+
+         \item Subscription(\underline{Utente, dataInizio, canale,} dataFine*)\\
+	       Subscription(Utente) referenzia Utente(username)	\\
+              Subscription(Canale) referenzia Canale(nomeCanale)\\
+
+
+         \item Calendario(\underline{Streamer, dataOra, titolo,} visibilità)\\
+	       Calendario(Streamer) referenzia Streamer(username) \\
+
+         \item Visitatore(\underline{IndirizzoIP})\\
+        
+         \item Visualizzainanonimo(\underline{visitatore, contenutomultimediale})\\
+            Visualizzainanonimo (visitatore) referenzia visitatore(IndirizzoIP)\\
+            Visualizzainanonimo (contenutomultimediale) referenzia contenutomultimediale (Url)\\
+
+         \item Visualizza (\underline{utente, contenutomultimediale})  \\     
+	    Visualizza(utente)referenzia Utente(username)\\
+            Visualizza (contenutomultimediale) referenzia contenutomultimediale (Url)\\
+
+
+         \item ContenutoMultimediale(\underline{Url}, titolo, tipo, categoria, durata, numerovisualizzazioni*, visualizzazionimedie*)\\
+
+         \item Tag(\underline{nomeTag, contenutoMultimediale})\\
+	       Tag(contenutoMultimediale) referenzia ContenutoMultimediale(Url)\\
+
+        \item  Canale(\underline{nomeCanale,} numerofollower, descrizionecanale*, fotoprofilo*, trailer*)\\
+        
+         \item Genera(\underline{canale, contenutomultimediale})\\
+	      Genera(canale) referenzia Canale(nomeCanale)\\
+            Genera(contenutomultimediale) referenzia Canale(url)\\
+
+         \item Streamer(\underline{utente, canale})\\
+	       Streamer(utente) referenzia Utente(username)\\
+	       Streamer(canale) referenzia Canale(nomeCanale)\\
+
+         \item Social(\underline{urlprofilo,} Canale)\\
+	       Social(Canale) referenzia Canale(nomeCanale) \\
+
+         \item Donazione(\underline{utente, dataOra, bit, streamer})\\
+	       Donazione(utente) referenzia Utente(username) \\
+	       Donazione(streamer) referenzia Streamer(utente) \\
+
+        
+
+
+
+
+    \end{itemize}
+   
+\end{quote}
+\section{Implementazione}
+\begin{quote}
+    \subsection{DDL di creazione del database.}
+    Con il codice SQL seguente sono state create tutte le tabelle definite nello schema relazionale con i relativi vincoli stabiliti.
+    \begin{lstlisting}[language=sql]
+--Creazione tabella utente
+CREATE TABLE utente (
+  username varchar(50) NOT NULL,
+  password varchar(12) NOT NULL,
+  datanascita date NOT NULL,
+  bitposseduti int(11) NOT NULL,
+  telefono varchar(15) DEFAULT NULL,
+  email varchar(60) DEFAULT NULL,
+  tipoutente varchar(12) NOT NULL DEFAULT 'spettatore'
+);
+
+ALTER TABLE utente
+  ADD PRIMARY KEY (username),
+  ADD UNIQUE KEY telefono (telefono),
+  ADD UNIQUE KEY email (email);
+
+--Creazione tabella Canale
+CREATE TABLE canale (
+  nomeCanale varchar(25) NOT NULL,
+  numerofollower MEDIUMINT(11) NOT NULL,
+  descrizionecanale varchar(255) DEFAULT NULL,
+  fotoprofilo varchar(100) DEFAULT NULL,
+  trailer varchar(100) DEFAULT NULL
+);
+
+ALTER TABLE canale
+  ADD PRIMARY KEY (nomeCanale);
+
+
+--Creazione tabella Streamer
+CREATE TABLE streamer (
+  utente varchar(50) NOT NULL,
+  canale varchar(25) NOT NULL,
+  numerolive int(11) NOT NULL DEFAULT 0,
+  minutitrasmessi int(11) NOT NULL DEFAULT 0,
+  spettatorisimultanei int(11) NOT NULL DEFAULT 0
+);
+
+ALTER TABLE streamer
+  ADD PRIMARY KEY (utente),
+  ADD KEY canale (canale);
+
+ALTER TABLE streamer
+  ADD CONSTRAINT fk_1_streamer FOREIGN KEY (utente) REFERENCES utente (username) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT fk_2_streamer FOREIGN KEY (canale) REFERENCES canale (nomeCanale) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--Creazione tabella Calendario
+CREATE TABLE calendario (
+  Streamer varchar(50) NOT NULL,
+  dataOra datetime NOT NULL,
+  titolo varchar(50) NOT NULL,
+  visibilita tinyint(1) NOT NULL
+);
+
+ALTER TABLE calendario
+  ADD PRIMARY KEY (Streamer,dataOra,titolo);
+
+  ALTER TABLE calendario
+  ADD CONSTRAINT fk_1_calendario FOREIGN KEY (Streamer) REFERENCES streamer (utente) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--Creazione tabella Donazione
+CREATE TABLE donazione (
+  utente varchar(50) NOT NULL,
+  dataOra datetime NOT NULL,
+  bit int(11) NOT NULL,
+  streamer varchar(50) NOT NULL
+);
+
+  ALTER TABLE donazione
+  ADD PRIMARY KEY (utente,dataOra,bit,streamer),
+  ADD KEY streamer (streamer);
+
+  ALTER TABLE donazione
+  ADD CONSTRAINT fk_1_donazione FOREIGN KEY (utente) REFERENCES utente (username) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT fk_2_donazione FOREIGN KEY (streamer) REFERENCES streamer (utente) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+--Creazione tabella Contenuto multimediale
+CREATE TABLE contenutomultimediale (
+  Url varchar(100) NOT NULL,
+  titolo varchar(50) NOT NULL,
+  tipo varchar(5) NOT NULL,
+  categoria varchar(20) NOT NULL,
+  durata time NOT NULL,
+  numerovisualizzazioni int(11) DEFAULT NULL,
+  visualizzazionimedie float DEFAULT NULL
+);
+
+ALTER TABLE contenutomultimediale
+  ADD PRIMARY KEY (Url);
+
+
+--Creazione tabella Tag
+CREATE TABLE tag (
+  nomeTag varchar(35) NOT NULL,
+  contenutoMultimediale varchar(100) NOT NULL
+);
+
+ALTER TABLE tag
+  ADD PRIMARY KEY (nomeTag,contenutoMultimediale),
+  ADD KEY contenutoMultimediale (contenutoMultimediale);
+
+ALTER TABLE tag
+  ADD CONSTRAINT fk_1_tag FOREIGN KEY (contenutoMultimediale) REFERENCES contenutomultimediale (Url)  ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+
+--Creazione tabella Visualizza
+  CREATE TABLE visualizza (
+  utente varchar(15) NOT NULL,
+  contenutomultimediale varchar(100) NOT NULL
+);
+
+ALTER TABLE visualizza
+  ADD PRIMARY KEY (utente,contenutomultimediale),
+  ADD KEY contenutomultimediale (contenutomultimediale);
+
+ALTER TABLE visualizza
+  ADD CONSTRAINT fk_1_visualizza FOREIGN KEY (utente) REFERENCES utente (username) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT fk_2_visualizza FOREIGN KEY (contenutomultimediale) REFERENCES contenutomultimediale (Url) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--Creazione tabella Visitatore
+CREATE TABLE visitatore (
+  IndirizzoIP varchar(15) NOT NULL
+);
+
+ALTER TABLE visitatore
+  ADD PRIMARY KEY (IndirizzoIP);
+  
+--Creazione tabella Visualizza in anonimo
+CREATE TABLE visualizzainanonimo (
+  visitatore varchar(15) NOT NULL,
+  contenutomultimediale varchar(100) NOT NULL
+);
+
+ALTER TABLE visualizzainanonimo
+  ADD PRIMARY KEY (visitatore,contenutomultimediale),
+  ADD KEY contenutomultimediale (contenutomultimediale);
+
+ALTER TABLE visualizzainanonimo
+  ADD CONSTRAINT fk_1_visualizzainanonimo FOREIGN KEY (visitatore) REFERENCES visitatore (IndirizzoIP) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT fk_2_visualizzainanonimo FOREIGN KEY (contenutomultimediale) REFERENCES contenutomultimediale (Url) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+--Creazione tabella Subscription
+CREATE TABLE subscription (
+  Utente varchar(50) NOT NULL,
+  dataInizio date NOT NULL,
+  canale varchar(25) NOT NULL,
+  dataFine date DEFAULT NULL
+);
+
+ALTER TABLE subscription
+  ADD PRIMARY KEY (Utente,dataInizio,canale),
+  ADD KEY canale (canale);
+
+ALTER TABLE subscription
+  ADD CONSTRAINT fk_1_subscription FOREIGN KEY (Utente) REFERENCES utente (username) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT fk_2_subscription FOREIGN KEY (canale) REFERENCES canale (nomeCanale) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--Creazione tabella chat live
+CREATE TABLE chatlive (
+  Mittente varchar(50) NOT NULL,
+  dataOra datetime NOT NULL,
+  testo varchar(255) NOT NULL,
+  Live varchar(100) NOT NULL
+);
+
+ALTER TABLE chatlive
+  ADD PRIMARY KEY (Mittente,dataOra,testo,Live),
+  ADD KEY Live (Live);
+
+ALTER TABLE chatlive
+  ADD CONSTRAINT fk_1_chatlive FOREIGN KEY (Mittente) REFERENCES utente (username) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT fk_2_chatlive FOREIGN KEY (Live) REFERENCES contenutomultimediale (Url) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+--Creazione tabella messaggio privato
+CREATE TABLE messaggioprivato (
+  Mittente varchar(50) NOT NULL,
+  dataOra datetime NOT NULL,
+  testo varchar(500) NOT NULL,
+  Destinatario varchar(50) NOT NULL
+);
+
+
+ALTER TABLE messaggioprivato
+  ADD PRIMARY KEY (Mittente,dataOra,testo,Destinatario),
+  ADD KEY Destinatario (Destinatario);
+
+  ALTER TABLE messaggioprivato
+  ADD CONSTRAINT fk_1_messaggioprivato FOREIGN KEY (Mittente) REFERENCES utente (username) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT fk_2_messaggioprivato FOREIGN KEY (Destinatario) REFERENCES utente (username) ON DELETE CASCADE ON UPDATE CASCADE;
+
+  CREATE TABLE social (
+  canale varchar(25) NOT NULL,
+  urlprofilo varchar(50) NOT NULL
+);
+
+ALTER TABLE social
+  ADD PRIMARY KEY (urlprofilo),
+  ADD KEY canale (canale);
+  
+ALTER TABLE social
+  ADD CONSTRAINT social FOREIGN KEY (canale) REFERENCES canale (nomeCanale) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+--Creazione tabella Genera
+CREATE TABLE genera (
+  canale varchar(50) NOT NULL,
+  contenutomultimediale varchar(100) NOT NULL
+);
+
+
+ALTER TABLE genera
+  ADD PRIMARY KEY (canale,contenutomultimediale),
+  ADD KEY fk_2_genera (contenutomultimediale);
+
+ALTER TABLE genera ADD UNIQUE(contenutomultimediale);
+
+
+ALTER TABLE genera
+  ADD CONSTRAINT fk_1_genera FOREIGN KEY (canale) REFERENCES canale (nomeCanale) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT fk_2_genera FOREIGN KEY (contenutomultimediale) REFERENCES contenutomultimediale (Url) ON DELETE CASCADE ON UPDATE CASCADE;
+  
+    \end{lstlisting}
+
+
+\subsection{DML di popolamento di tutte le tabelle del database.}
+Con il codice SQL seguente sono state popolate tutte le tabelle create precedentemente con valori il più possibile vicini alla realtà.
+\begin{lstlisting}[language=sql]
+-- Inserimento dati nella  tabella calendario
+INSERT INTO calendario (Streamer, dataOra, titolo, visibilita) VALUES
+('AlessandroS01', '2023-07-22 16:38:30', 'Evento online', 0),
+('MariaRosa87', '2023-06-17 10:30:30', 'Music Festival', 1);
+
+
+-- Inserimento dati nella  tabella canale
+INSERT INTO canale (nomeCanale, numerofollower, descrizionecanale, fotoprofilo, trailer) VALUES
+('ArtistsOnAir', 40000, 'Benvenuti su Artists On Air! Qui troverete i nostri lavori artistici, le nostre performance e molto altro ancora. Iscrivetevi per non perdere nemmeno un live!', NULL, NULL),
+('Foodies', 100000, 'Benvenuti nel nostro canale Foodies! Qui troverete le nostre ricette, i nostri esperimenti culinari e molto altro ancora. Iscrivetevi per non perdere nemmeno una puntata!', 'https://www.example.com/fotoprofilo_foodies.jpg', 'https://www.example.com/trailer_foodies.mp4'),
+('GamingWithMark', 150000, 'Ciao a tutti! Sono Mark e questo è il mio canale di giochi! Qui troverai gameplay, recensioni e molto altro ancora!', NULL, 'https://www.example.com/trailer_mark.mp4'),
+('HealthyLiving', 25000, NULL, 'https://www.example.com/fotoprofilo_health.jpg', 'https://www.example.com/trailer_health.mp4'),
+('MusicLovers', 30000, NULL, NULL, NULL),
+('StreamQueen92', 85000, 'Ciao a tutti! Sono Laura, appassionata di giochi di ruolo e videogiochi in generale. Seguimi per scoprire il mondo del gaming con me!', 'https://www.example.com/fotoprofilo_laura.jpg', 'https://www.example.com/trailer_laura.mp4'),
+('TechTalks', 50000, 'Benvenuti in TechTalks! Siamo qui per discutere delle ultime novità in fatto di tecnologia, hardware e software. Iscriviti per rimanere aggiornato!', NULL, NULL),
+('TheGamerGals', 0, 'Ciao a tutti! Siamo le Gamer Gals, un gruppo di ragazze che amano giocare. Seguici per vedere i nostri gameplay, le nostre live e le nostre recensioni!', 'https://www.example.com/fotoprofilo_gamergals.jpg', 'https://www.example.com/trailer_gamergals.mp4'),
+('TheSportsFans', 90000, 'Ciao a tutti! Siamo The Sports Fans, qui per parlare di sport con voi! Seguici per scoprire le ultime notizie, le nostre opinioni e molto altro ancora!', NULL, 'https://www.example.com/trailer_sports.mp4'),
+('TravelVibes', 75000, 'Ciao a tutti! Siamo Travel Vibes, qui per farvi scoprire i posti più belli del mondo. Seguiteci per scoprire le nostre avventure!', 'https://www.example.com/fotoprofilo_travel.jpg', NULL);
+
+
+-- Inserimento dati nella  tabella chatlive
+INSERT INTO chatlive (Mittente, dataOra, testo, Live) VALUES
+('AdministratorTwitch ', '2023-06-09 17:39:18', 'Messaggio inviato in live per provare il funzionamento', 'https://www.twitch.tv/techreview'),
+('ElisaM90', '2023-06-09 17:39:18', 'Buongiorno a tutti', 'https://www.twitch.tv/fashionandstyle'),
+('FedericaV92', '2023-06-09 17:39:18', 'Complimenti', 'https://www.twitch.tv/foodie');
+
+
+-- Inserimento dati nella  tabella contenutomultimediale
+INSERT INTO contenutomultimediale (Url, titolo, tipo, categoria, durata, numerovisualizzazioni, visualizzazionimedie) VALUES
+('https://www.twitch.tv/blklght', 'Live music blklght 09/06/2023', 'live', 'music', '02:30:00', NULL, 0),
+('https://www.twitch.tv/creativestreams', 'Creative Streams - Writing Fiction', 'live', 'writing', '02:30:00', NULL, 0),
+('https://www.twitch.tv/fashionandstyle', 'Fashion and Style - Winter Collection', 'live', 'fashion', '00:25:00', NULL, 0),
+('https://www.twitch.tv/fitnessworkout', 'Fitness Workout - Cardio and Strength', 'live', 'health', '01:25:00', NULL, 1),
+('https://www.twitch.tv/foodie', 'Cooking with Alex - Italian Cuisine', 'live', 'cooking', '00:18:00', NULL, 1),
+('https://www.twitch.tv/musicfest', 'Music Fest - Live Concert', 'live', 'music', '01:02:00', NULL, 0),
+('https://www.twitch.tv/sportscenter', 'SportsCenter - Top 10 Plays', 'clip', 'sports', '00:00:05', 1, NULL),
+('https://www.twitch.tv/techgadgets', 'Tech Gadgets - Smart Home Devices', 'live', 'technology', '03:00:00', NULL, 0),
+('https://www.twitch.tv/techreview', 'Tech Review - New iPhone 13', 'live', 'technology', '05:50:00', NULL, 2),
+('https://www.twitch.tv/videos/123456789', 'Introduction to Python Programming', 'video', 'education', '00:01:20', 0, NULL),
+('https://www.twitch.tv/videos/987654321', 'Introduction to Machine Learning', 'video', 'education', '00:43:00', 1, NULL);
+
+
+-- Inserimento dati nella  tabella donazione
+INSERT INTO donazione (utente, dataOra, bit, streamer) VALUES
+('AliceN03', '2023-06-09 17:10:17', 85, 'RobertoB83'),
+('AnnaGal48', '2023-06-09 17:10:17', 80, 'ElisaM90'),
+('ChiaraN01', '2023-06-09 17:10:17', 41, 'ElisaM90'),
+('ChiaraN01', '2023-06-09 17:10:17', 47, 'SaraG05'),
+('DavideC02', '2023-06-09 17:10:17', 27, 'AlessandroS01');
+
+
+-- Inserimento dati nella  tabella genera
+INSERT INTO genera (canale, contenutomultimediale) VALUES
+('ArtistsOnAir', 'https://www.twitch.tv/blklght'),
+('Foodies', 'https://www.twitch.tv/creativestreams'),
+('Foodies', 'https://www.twitch.tv/sportscenter'),
+('MusicLovers', 'https://www.twitch.tv/fitnessworkout'),
+('MusicLovers', 'https://www.twitch.tv/musicfest'),
+('TechTalks', 'https://www.twitch.tv/techgadgets'),
+('TechTalks', 'https://www.twitch.tv/techreview'),
+('TechTalks', 'https://www.twitch.tv/videos/123456789'),
+('TechTalks', 'https://www.twitch.tv/videos/987654321'),
+('TheSportsFans', 'https://www.twitch.tv/fashionandstyle'),
+('TheSportsFans', 'https://www.twitch.tv/foodie');
+
+
+-- Inserimento dati nella  tabella messaggioprivato
+INSERT INTO messaggioprivato (Mittente, dataOra, testo, Destinatario) VALUES
+('AlessiaB94', '2023-06-09 16:49:25', 'Hai visto l\'ultima live di cui abbiamo parlato ieri?', 'AliceN03'),
+('AnnaGal48', '2023-06-09 16:49:25', 'Tutto bene grazie, tu?', 'GiuseppeR85'),
+('FilippoG02', '2023-06-09 16:49:25', 'Ciao', 'PaoloD94'),
+('GiovanniP88', '2023-06-09 16:49:25', 'Ciao GiuseppeR85!', 'GiuseppeR85'),
+('GiuseppeR85', '2023-06-09 16:49:25', 'Ciao, come stai?', 'AnnaGal48');
+
+
+-- Inserimento dati nella  tabella social
+INSERT INTO social (canale, urlprofilo) VALUES
+('Foodies', 'https://www.facebook.com/Foodies_profile'),
+('GamingWithMark', 'https://www.twitter.com/GamingWithMark_profile'),
+('HealthyLiving', 'https://www.facebook.com/HealthyLiving_profile'),
+('HealthyLiving', 'https://www.twitter.com/HealthyLiving_profile'),
+('MusicLovers', 'https://www.twitter.com/MusicLovers'),
+('TechTalks', 'https://www.instagram.com/TechTalks_profile'),
+('TechTalks', 'https://www.twitter.com/TechTalks_profile'),
+('TheGamerGals', 'https://www.facebook.com/TheGamerGals_profile'),
+('TheGamerGals', 'https://www.instagram.com/TheGamerGals_profile'),
+('TheSportsFans', 'https://www.instagram.com/TheSportsFans_profile'),
+('TravelVibes', 'https://www.skype.com/TravelVibes_profile');
+
+
+-- Inserimento dati nella  tabella streamer
+INSERT INTO streamer (utente, canale, numerolive, minutitrasmessi, spettatorisimultanei) VALUES
+('AlessandroS01', 'ArtistsOnAir', 1, 150, 0),
+('AlessiaB94', 'Foodies', 1, 150, 0),
+('ElisaM90', 'StreamQueen92', 0, 0, 0),
+('FedericaV92', 'TheGamerGals', 0, 0, 0),
+('LucaM97', 'HealthyLiving', 0, 0, 0),
+('MarcoB01', 'GamingWithMark', 0, 0, 0),
+('MariaRosa87', 'MusicLovers', 2, 127, 1),
+('PaoloD94', 'TheSportsFans', 2, 43, 1),
+('RobertoB83', 'TravelVibes', 0, 0, 0),
+('SaraG05', 'TechTalks', 2, 53, 1);
+
+
+-- Inserimento dati nella  tabella subscription
+INSERT INTO subscription (Utente, dataInizio, canale, dataFine) VALUES
+('AliceN03', '2023-02-03', 'TheSportsFans', NULL),
+('AliceN03', '2023-05-19', 'Foodies', NULL),
+('FilippoG02', '2022-06-09', 'MusicLovers', NULL),
+('GiovanniP88', '2021-06-17', 'HealthyLiving', '2022-12-07'),
+('GiovanniP88', '2022-04-09', 'TheGamerGals', NULL),
+('GiovanniP88', '2023-01-01', 'TravelVibes', NULL),
+('GiovanniP88', '2023-06-09', 'ArtistsOnAir', NULL),
+('GiuseppeR85', '2020-12-27', 'GamingWithMark', '2023-05-20');
+
+
+-- Inserimento dati nella  tabella tag
+INSERT INTO tag (nomeTag, contenutoMultimediale) VALUES
+('android', 'https://www.twitch.tv/techreview'),
+('creative', 'https://www.twitch.tv/creativestreams'),
+('music', 'https://www.twitch.tv/blklght'),
+('sport', 'https://www.twitch.tv/sportscenter'),
+('style', 'https://www.twitch.tv/fashionandstyle'),
+('tech', 'https://www.twitch.tv/techgadgets'),
+('video', 'https://www.twitch.tv/videos/123456789'),
+('video', 'https://www.twitch.tv/videos/987654321');
+
+
+-- Inserimento dati nella  tabella utente
+INSERT INTO utente (username, password, datanascita, bitposseduti, telefono, email, tipoutente) VALUES
+('AdministratorTwitch ', 'AdminTwitch!', '2011-01-01', 150, NULL, 'admintwitch@twitch.com', 'spettatore'),
+('AlessandroS01', 'Sandro2001!', '2001-11-22', 15, NULL, 'alessandro.s01@hotmail.com', 'streamer'),
+('AlessiaB94', 'Gaming2023', '1994-12-01', 70, '+3901122334455', NULL, 'streamer'),
+('AliceN03', 'Stream2023', '2003-06-21', 30, '+44123456789', NULL, 'spettatore'),
+('AnnaGal48', 'Anna1948!', '1948-09-24', 0, NULL, 'annagal48@gmail.com', 'spettatore'),
+('ChiaraN01', 'Streaming202', '2001-05-28', 60, '+390123456789', NULL, 'spettatore'),
+('DavideC02', 'TwitchDav02', '2002-07-10', 5, NULL, 'davide.c02@gmail.com', 'spettatore'),
+('ElisaM90', 'ElisM90', '1990-03-15', 55, '+3901122332455', NULL, 'streamer'),
+('FedericaV92', 'StreamFede92', '1992-02-02', 25, NULL, 'federica.v92@gmail.com', 'streamer'),
+('FilippoG02', 'Twitch2023', '2002-10-16', 20, NULL, 'filippo.gualtierotti@gmail.com', 'spettatore'),
+('GiovanniP88', 'Stream88!', '1988-11-12', 40, '+3901123456789', NULL, 'spettatore'),
+('GiuseppeR85', 'Twitch2023', '1985-09-05', 100, '+390987654321', NULL, 'spettatore'),
+('LucaM97', 'Streaming23', '1997-07-08', 0, NULL, 'luca.martini@hotmail.com', 'streamer'),
+('MarcoB01', 'Gamer2023', '2001-03-12', 50, NULL, 'marco.bianchi@gmail.com', 'streamer'),
+('MariaRosa87', 'GamingGirl87', '1987-08-05', 75, NULL, 'mariarosa87@gmail.com', 'streamer'),
+('PaoloD94', 'Gaming2023', '1994-12-10', 80, '+390678901234', NULL, 'streamer'),
+('RobertoB83', 'Twitcher83', '1983-07-27', 90, '+3901122334355', NULL, 'streamer'),
+('SaraG05', 'Sarina2005', '2005-02-18', 10, '+441234567890', NULL, 'streamer');
+
+
+-- Inserimento dati nella  tabella visitatore
+INSERT INTO visitatore (IndirizzoIP) VALUES
+('10.0.0.1'),
+('10.0.0.100'),
+('10.1.1.1'),
+('172.16.0.1'),
+('172.16.0.100'),
+('172.16.1.1'),
+('192.168.0.1'),
+('192.168.0.100'),
+('192.168.1.1'),
+('192.168.1.100');
+
+
+-- Inserimento dati nella  tabella visualizza
+INSERT INTO visualizza (utente, contenutomultimediale) VALUES
+('ChiaraN01', 'https://www.twitch.tv/techgadgets'),
+('ChiaraN01', 'https://www.twitch.tv/techreview'),
+('DavideC02', 'https://www.twitch.tv/techreview'),
+('GiovanniP88', 'https://www.twitch.tv/videos/987654321'),
+('GiuseppeR85', 'https://www.twitch.tv/musicfest');
+
+
+-- Inserimento dati nella  tabella visualizzainanonimo
+INSERT INTO visualizzainanonimo (visitatore, contenutomultimediale) VALUES
+('10.0.0.1', 'https://www.twitch.tv/foodie'),
+('172.16.0.100', 'https://www.twitch.tv/sportscenter'),
+('192.168.1.1', 'https://www.twitch.tv/fitnessworkout'),
+('172.16.0.1', 'https://www.twitch.tv/techreview'),
+('192.168.1.100', 'https://www.twitch.tv/techreview');
+
+
+
+ \end{lstlisting}
+\clearpage
+\subsection{Qualche operazione di cancellazione e modifica per verificare i vincoli e gli effetti causati da operazioni su chiavi esterne}
+\begin{lstlisting}[language=sql]
+
+--Test UPDATE CANALE
+    UPDATE canale SET nomeCanale = 'MusicLovers CI' WHERE canale.nomeCanale = 'MusicLovers';
+
+    SUCCESS:
+--La query precedente modifica il nome del canale MusicLovers in MusicLoversTest nelle seguenti tabelle: Canale, Streamer, Genera, Social.
+--Questo significa che la foreign key relativa al nome del canale definita nella tabella streamer con il vincolo in UPDATE: cascade, funziona correttamente in quanto modifica il valore su tutte le tabelle figlie.
+
+****************************************************************************
+
+--Test eliminazione dalla tabella canale di un cnale collegato a uno streamer
+DELETE FROM canale WHERE canale.nomeCanale = 'ArtistsOnAir'
+
+ERROR:
+    Cannot delete or update a parent row: a foreign key constraint fails (`gualtierottifilippo_progettodb_giugno2023`.`streamer`, CONSTRAINT `fk_2_streamer` FOREIGN KEY (`canale`) REFERENCES `canale` (`nomeCanale`) ON DELETE NO ACTION ON UPDATE CASCADE)
+
+--Giustamente non permette l'eliminazione del canale dato che non viene eliminato anche lo streamer. 
+
+****************************************************************************
+    
+--Test eliminazione contenuto multimediale
+DELETE FROM contenutomultimediale WHERE contenutomultimediale.Url = 'https://www.twitch.tv/videos/987654321'
+
+SUCCESS:
+--La query precedente elimina dalla tabella contenuto multimediale il video con url: https://www.twitch.tv/videos/987654321 e tramite la forign key con vincolo ON DELETE CASCADE, rimuove anche nella tabella GENERA la creazione di questo video da parte del canale: TechTalks, nella tabella TAG rimuove i record associati a questo video e nella tabella VISUALIZZA rimuove tutte le occorrenze dove è presente l'url indicato.
+
+****************************************************************************
+
+--Classifica streamer piu' seguiti
+SELECT s.utente, c.nomeCanale, c.numerofollower
+FROM streamer AS s
+JOIN canale AS c ON s.canale = c.nomeCanale 
+ORDER BY c.numerofollower DESC LIMIT 3;
+
+SUCCESS:
+La query precedente restituisce il seguente risultato:
+UTENTE          NOMECANALE          NUMEROFOLLOWER
+MarcoB01        GamingWithMark      150000
+PaoloD94        TheSportsFans       90000
+ElisaM90        StreamQueen92       85000
+
+--Controllo Affiliate (un minimo di 500 minuti trasmessi, una media di tre o piu' spettatore simultanei, almeno 50 follower)
+SELECT *
+FROM streamer
+WHERE minutitrasmessi >= 500 
+  AND spettatorisimultanei >= 3 
+  AND (SELECT numerofollower FROM canale WHERE nomeCanale = streamer.canale) >= 50;
+
+SUCCESS:
+La query precedente restituisce il seguente risultato:
+utente    canale        numerolive    minutitrasmessi   spettatorisimultanei
+SaraG05   TechTalks         2             530                   3
+
+  
+
+\end{lstlisting}
+\end{quote}
+
+
+\end{document}
